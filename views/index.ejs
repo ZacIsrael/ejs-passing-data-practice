@@ -9,8 +9,22 @@
 
 <body>
   <!-- Write your code here -->
-   <!-- h1 is different depending on if this page is rendered with a GET request or a POST request -->
-   <h1>Enter your name below</h1>
+   <!-- only do the following if all of the necessary values from the data object parameter are there  -->
+   <!-- local allows a null check; if I did not put 'locals' in front of he field names, I would have 
+    recieved an error because EJS acts as if the parameters already exist -->
+   <% if(locals.method && locals.fName && locals.lName) { %>
+     <!-- h1 is different depending on if this page is rendered with a GET request or a POST request -->
+   <% if(method === 'GET') { %>
+      <h1>Enter your name below</h1>
+    <% } else {%>
+      <!-- display the numbers of letters in the name -->
+      <h1>There are <%=length%> letters in your name.</h1>
+    <% } %>
+   <% } else { %>
+    <!-- based on how index.js is implemented, we should never reach this point but just in case we do,
+    set the h1 element to the default of "Enter your name below" -->
+    <h1>Enter your name below</h1>
+   <% } %>
   <form action="/submit" method="POST">
     <input type="text" name="fName" placeholder="First name">
     <input type="text" name="lName" placeholder="Last name">
