@@ -16,6 +16,7 @@ app.set('view engine', 'ejs');
 // deafult GET request/ home page
 app.get("/", (req, res) => {
   // retrieve & render the default file (index.ejs)
+  console.log('req.method = ', req.method);
   res.render('index');
 
 });
@@ -25,6 +26,9 @@ app.post("/submit", (req, res) => {
   const data = req.body;
   
   data.length = data.fName.length + data.lName.length;
+  // Pass the method as a parameter; essential for the conditional statement
+  // that will determine what will be the text for the h1 element in the EJS file.
+  data.method = req.method;
   console.log('data = ', data);
   // fName & lName
   // send the body of the request to the ejs file as parameters
